@@ -1,0 +1,334 @@
+body {
+	margin: 0;
+	background-color: #000;
+	color: #fff;
+	font-family: Monospace;
+	font-size: 13px;
+	line-height: 24px;
+	overscroll-behavior: none;
+}
+
+a {
+	color: #ff0;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+button {
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+canvas {
+	display: block;
+}
+
+#info {
+	position: absolute;
+	top: 8vh;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	z-index: 1;
+}
+
+a, button, input, select {
+	pointer-events: auto;
+}
+
+.dg.ac {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+ul li{
+	list-style: none;
+}
+
+/* 底部 */
+.bottom{
+	background: url("../../img/bottom.png") no-repeat;
+	background-size: 100% 100%;
+	position: absolute;
+	bottom: -35vh;
+	left: 0;
+	width: 100%;
+	height: 25%;
+	-moz-transition: bottom 0.6s;
+	/* Firefox 4 */
+	-webkit-transition: bottom 0.6s;
+	/* Safari 和 Chrome */
+	-o-transition: bottom 0.6s;
+	transition: bottom 0.6s;
+}
+
+.bottomActive{
+	bottom: 0;
+	-moz-transition: bottom 0.6s;
+	/* Firefox 4 */
+	-webkit-transition: bottom 0.6s;
+	/* Safari 和 Chrome */
+	-o-transition: bottom 0.6s;
+	transition: bottom 0.6s;
+}
+
+.btn{
+	position: absolute;
+	width: 5vw;
+	line-height: 5vh;
+	border-radius: 30px;
+	border: 1px solid #fff;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	background: rgba(255,255,255,.4);
+	cursor: pointer;
+}
+
+.btnActive{
+	color: #00ffff;
+	border-color: #00ffff;
+    background: rgba(0,255,255,.4);
+	-moz-box-shadow: 0 0 12px 8px #00ffff;
+	-webkit-box-shadow: 0 0 12px 8px #00ffff;
+	-o-box-shadow: 0 0 12px 8px #00ffff;
+	box-shadow: 0 0 12px 6px #00ffff;
+}
+
+.btn.up{
+	width: 4vh;
+	line-height: 6vh;
+	bottom: 5vh;
+	right: 50%;
+	background: rgba(255,255,255,.2);
+}
+
+.btn.up:hover{
+	color: #00ffff;
+	border-color: #00ffff;
+	background: rgba(0,255,255,.4);
+	-moz-box-shadow: 0 0 12px 8px #00ffff;
+	-webkit-box-shadow: 0 0 12px 8px #00ffff;
+	-o-box-shadow: 0 0 12px 8px #00ffff;
+	box-shadow: 0 0 12px 6px #00ffff;
+}
+
+.btn.up i{
+	font-size: 26px;
+}
+
+
+li.btn:nth-child(1){
+	top: 1.6vh;
+	left: 9.5vw;
+	-ms-transform:rotate(-11deg); 	/* IE 9 */
+	-moz-transform:rotate(-11deg); 	/* Firefox */
+	-webkit-transform:rotate(-11deg); /* Safari 和 Chrome */
+	-o-transform:rotate(-11deg);
+	transform: rotate(-11deg);
+}
+
+li.btn:nth-child(2){
+	top: 8vh;
+	left: 10.5vw;
+	-ms-transform: rotate(-13deg);
+	-moz-transform: rotate(-13deg);
+	-webkit-transform: rotate(-13deg);
+	-o-transform: rotate(-13deg);
+	transform: rotate(-13deg);
+}
+li.btn:nth-child(3){
+	top: 4vh;
+	left: 19.8vw;
+	-ms-transform: rotate(-9deg);
+	-moz-transform: rotate(-9deg);
+	-webkit-transform: rotate(-9deg);
+	-o-transform: rotate(-9deg);
+	transform: rotate(-9deg);
+}
+li.btn:nth-child(4){
+	top: 1vh;
+	left: 28.8vw;
+	-ms-transform: rotate(-9deg);
+	-moz-transform: rotate(-9deg);
+	-webkit-transform: rotate(-9deg);
+	-o-transform: rotate(-9deg);
+	transform: rotate(-9deg);
+}
+li.btn:nth-child(5){
+	top: -6.8vh;
+	left: 37.3vw;
+	-ms-transform: rotate(-4deg);
+	-moz-transform: rotate(-4deg);
+	-webkit-transform: rotate(-4deg);
+	-o-transform: rotate(-4deg);
+	transform: rotate(-4deg);
+}
+li.btn:nth-child(6){
+	top: -0.5vh;
+	left: 37.8vw;
+	-ms-transform: rotate(-4deg);
+	-moz-transform: rotate(-4deg);
+	-webkit-transform: rotate(-4deg);
+	-o-transform: rotate(-4deg);
+	transform: rotate(-4deg);
+}
+li.btn:nth-child(7){
+	top: -1.3vh;
+	left: 47.1vw;
+	-ms-transform: rotate(-4deg);
+	-moz-transform: rotate(-4deg);
+	-webkit-transform: rotate(-4deg);
+	-o-transform: rotate(-4deg);
+	transform: rotate(-4deg);
+}
+li.btn:nth-child(8){
+	top: -0.7vh;
+	right: 38.7vw;
+	-ms-transform: rotate(6deg);
+	-moz-transform: rotate(6deg);
+	-webkit-transform: rotate(6deg);
+	-o-transform: rotate(6deg);
+	transform: rotate(6deg);
+}
+li.btn:nth-child(9){
+	top: 1vh;
+	right: 29.6vw;
+	-ms-transform: rotate(10deg);
+	-moz-transform: rotate(10deg);
+	-webkit-transform: rotate(10deg);
+	-o-transform: rotate(10deg);
+	transform: rotate(10deg);
+}
+li.btn:nth-child(10){
+	top: 3.5vh;
+	right: 20.5vw;
+	-ms-transform: rotate(9deg);
+	-moz-transform: rotate(9deg);
+	-webkit-transform: rotate(9deg);
+	-o-transform: rotate(9deg);
+	transform: rotate(9deg);
+}
+li.btn:nth-child(11){
+	top: 7.5vh;
+	right: 11.1vw;
+	-ms-transform: rotate(15deg);
+	-moz-transform: rotate(15deg);
+	-webkit-transform: rotate(15deg);
+	-o-transform: rotate(15deg);
+	transform: rotate(15deg);
+}
+
+.conditions{
+	position: absolute;
+	bottom: 0;
+	left: 17%;
+	width: 65%;
+	height: 15vh;
+	display:-webkit-flex;
+	display: flex;
+	align-items: center;
+}
+
+.conditions .star{
+	flex: 1;
+	height: 100%;
+	background-position: center;
+	background-size: 100% auto;
+}
+
+.conditions .feature{
+	flex: 5;
+	display:-webkit-flex;
+	display: flex;
+	align-items: center;
+}
+
+/* 滑杆 */
+.feature .slide{
+	flex: 1;
+	margin-right: 2vw;
+}
+.feature .slide:last-child{
+	margin-right: 0;
+}
+
+.slide p.title{
+	margin: 0;
+	font-size: 20px;
+}
+.slide .num{
+	color: #00ffff;
+	font-size: 18px;
+}
+.slide .box{
+	display:-webkit-flex;
+	display: flex;
+	align-items: center;
+}
+.slide .box .el-slider {
+	margin-right: 1vw;
+	flex: 6;
+}
+.slide .box .num{
+	flex: 1;
+}
+.slide .box .el-slider__runway{
+	height: 3px;
+}
+.slide .box .el-slider__bar{
+	height: 3px;
+	background-color: #00ffff;
+}
+.slide .box .el-slider__button{
+	border: none;
+	background-color: #00ffff;
+}
+.slide .box .el-slider__button-wrapper{
+	top: -16px;
+}
+
+/* checkbox */
+.check{
+	flex: 1;
+	margin-right: 2vw;
+}
+
+.check .el-checkbox:hover{
+	color: #00ffff;
+}
+
+.check .el-checkbox__label{
+	font-size: 20px;
+	color: #fff;
+	vertical-align: middle;
+}
+.check .el-checkbox__label:hover{
+	color: #00ffff;
+}
+.check .el-checkbox__input.is-checked+.el-checkbox__label{
+	color: #00ffff;
+}
+.check .el-checkbox__inner{
+	width: 16px;
+	height: 16px;
+	background-color: transparent;
+	border: 1px solid #00ffff;
+}
+.check .el-checkbox__input.is-checked .el-checkbox__inner{
+	background-color: transparent;
+	border-color: #00ffff;
+}
+.check .el-checkbox__inner::after{
+    top: 2px;
+    border: 3px solid #FFF;
+    border-left: 0;
+    border-top: 0;
+}

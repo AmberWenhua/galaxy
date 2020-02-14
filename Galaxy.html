@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>three.js webgl - fly controls - earth</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="./js/css/main.css">
+    <link type="text/css" rel="stylesheet" href="js/css/element-ui.css">
+    <link type="text/css" rel="stylesheet" href="fonts/iconfont.css">
+    <style>
+        body {
+            color: #eee;
+            color: #eee;
+            margin: 0;
+            overflow: hidden;
+            background: url("./img/StarrySky.jpg") center no-repeat;
+            background-size:cover;
+        }
+
+        a {
+            color: #0080ff;
+        }
+
+        b {
+            color: orange
+        }
+    </style>
+    <script src="js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+
+
+
+<div class="btn up" ><i class="iconfont icon-jiantou-copy" aria-hidden="true"></i></div>
+
+<div class="bottom" id="app" >
+    <ul>
+        <li class="btn" v-for="(item, index) of btns" :key="item" @click="btn(index)" :class="{'btnActive': currentIndex === index}">{{item.name}}</li>
+    </ul>
+
+    <div id="info" class="check">
+        <el-checkbox v-model="sunchecked" @change="check()" v-if="show_earth === 'sun'">固定视角</el-checkbox>
+    </div>
+
+    <div class="conditions">
+        <div class="star" :style="imgObj"></div>
+        <earth v-if="show_earth === 'earth'"></earth>
+        <comet v-if="show_earth === 'comet'"></comet>
+        <sun v-if="show_earth === 'sun'"></sun>
+        <satellite v-if="show_earth === 'satellite'"></satellite>
+        <common v-if="show_earth === 'common'" :common-id="currentIndex"></common>
+    </div>
+</div>
+
+<!-- 地球的条件html -->
+<template id="earth">
+    <div class="feature">
+        <div class="slide">
+            <p class="title">地轴倾角x rad：</p>
+            <div class="box">
+                <el-slider v-model="value1" :show-tooltip="false" @input="slide('地轴X')" :min="-10" :max="10" :step="$parent.com(10, -10)"></el-slider>
+                <span class="num">{{value1.toFixed(2)}}</span>
+            </div>
+        </div>
+        <div class="slide">
+            <p class="title">地轴倾角y rad：</p>
+            <div class="box">
+                <el-slider v-model="value2" :show-tooltip="false" @input="slide('地轴Y')" :min="-10" :max="10" :step="$parent.com(10, -10)"></el-slider>
+                <span class="num">{{value2.toFixed(2)}}</span>
+            </div>
+        </div>
+        <div class="slide">
+            <p class="title">地轴倾角z rad：</p>
+            <div class="box">
+                <el-slider v-model="value3" :show-tooltip="false" @input="slide('地轴Z')" :min="-10" :max="10" :step="$parent.com(10, -10)"></el-slider>
+                <span class="num">{{value3.toFixed(2)}}</span>
+            </div>
+        </div>
+        <div class="slide">
+            <p class="title">旋转速度(功能试例)：</p>
+            <div class="box">
+                <el-slider v-model="value4" :show-tooltip="false" @input="slide('旋转速度')" :min="-0.1" :max="0.1" :step="$parent.com(0.1, -0.1)"></el-slider>
+                <span class="num">{{value4.toFixed(2)}}</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- 彗星的条件html -->
+<template id="comet">
+    <div style="flex: 5">
+        <div class="feature">
+            <div style="width: 80%; margin: 0 auto; display: flex;">
+                <div class="slide">
+                    <p class="title">半长轴 *10e7km：</p>
+                    <div class="box">
+                        <el-slider v-model="value1" :show-tooltip="false" @input="slide('半长轴')" :min="20" :max="100"></el-slider>
+                        <span class="num">{{value1}}</span>
+                    </div>
+                </div>
+                <div class="slide">
+                    <p class="title">半短轴 *10e7km：</p>
+                    <div class="box">
+                        <el-slider v-model="value2" :show-tooltip="false" @input="slide('半短轴')" :min="20" :max="100"></el-slider>
+                        <span class="num">{{value2}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="feature" style="margin-top: 1vh;">
+            <div class="slide">
+                <p class="title">平均速度 km/s：</p>
+                <div class="box">
+                    <el-slider v-model="value3" :show-tooltip="false" @input="slide('速度')" :min="-30" :max="30" :step="$parent.com(30, -30)"></el-slider>
+                    <span class="num">{{value3.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="slide">
+                <p class="title">轨道倾角x rad：</p>
+                <div class="box">
+                    <el-slider v-model="value4" :show-tooltip="false" @input="slide('旋转X')" :min="0" :max="2 * Math.PI" :step="$parent.com(2 * Math.PI, 0)"></el-slider>
+                    <span class="num">{{value4.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="slide">
+                <p class="title">轨道倾角y rad：</p>
+                <div class="box">
+                    <el-slider v-model="value5" :show-tooltip="false" @input="slide('旋转Y')" :min="0" :max="2 * Math.PI" :step="$parent.com(2 * Math.PI, 0)"></el-slider>
+                    <span class="num">{{value5.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="slide">
+                <p class="title">轨道倾角z rad：</p>
+                <div class="box">
+                    <el-slider v-model="value6" :show-tooltip="false" @input="slide('旋转Z')" :min="0" :max="2 * Math.PI" :step="$parent.com(2 * Math.PI, 0)"></el-slider>
+                    <span class="num">{{value6.toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- 太阳的条件html-->
+<template id="sun">
+    <div class="feature">
+        <div class="check">
+            <el-checkbox v-model="checked1" @change="check('radial1')">太阳宇宙射线1</el-checkbox>
+        </div>
+        <div class="check">
+            <el-checkbox v-model="checked2" @change="check('radial2')">太阳宇宙射线2</el-checkbox>
+        </div>
+        <div class="check">
+            <el-checkbox v-model="checked3" @change="check('radial3')">太阳宇宙射线3</el-checkbox>
+        </div>
+        <div class="slide">
+            <p class="title">自转周期 天：</p>
+            <div class="box">
+                <el-slider v-model="value" :show-tooltip="false" @input="slide()" :min="0" :max="50" :step="$parent.com(0, 50)"></el-slider>
+                <span class="num">{{value.toFixed(2)}}</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- 人造卫星的条件html -->
+<template id="satellite">
+    <div class="feature">
+        <div class="check" style="text-align: center;">
+            <el-checkbox v-model="checked" @change="check()">卫星视角</el-checkbox>
+        </div>
+        <div class="slide">
+            <p class="title">相对速度 km/s：</p>
+            <div class="box">
+                <el-slider v-model="value" :show-tooltip="false" @input="slider()" :min="-0.1" :max="0.1" :step="$parent.com(0.1, -0.1)"></el-slider>
+                <span class="num">{{value.toFixed(2)}}</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- 普通行星的条件html -->
+<template id="common">
+    <div class="feature">
+        <div class="slide">
+            <p class="title">自转周期 天：</p>
+            <div class="box">
+                <el-slider v-model.lazy="value1" :show-tooltip="false" @input="slider('自转速度')" :min="0" :max="300" :step="$parent.com(300, 0)"></el-slider>
+                <span class="num">{{value1.toFixed(2)}}</span>
+            </div>
+        </div>
+        <div class="slide">
+            <p class="title">公转速度 km/s：</p>
+            <div class="box">
+                <el-slider v-model.lazy="value2" :show-tooltip="false" @input="slider('公转速度')" :min="-100" :max="100" :step="$parent.com(100, -100)"></el-slider>
+                <span class="num">{{value2.toFixed(2)}}</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script type="module" src="js/stars.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<script src="js/element-ui.js"></script>
+<script type="module" src="js/bottom.js"></script>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).click((e) => {
+        const upDom = $('.up');
+        const bottomDom = $('.bottom');
+        if (!upDom.is(e.target) && upDom.has(e.target).length === 0
+            && !bottomDom.is(e.target) && bottomDom.has(e.target).length === 0) {
+            setTimeout(() => {
+                upDom.css('display', 'block');
+            }, 100);
+            bottomDom.removeClass('bottomActive');
+        }else {
+            upDom.css('display', 'none');
+            bottomDom.addClass('bottomActive');
+        }
+    });
+</script>
+</body>
+</html>
